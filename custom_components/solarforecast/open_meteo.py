@@ -19,6 +19,7 @@ from .const import (
     OPEN_METEO_PROVIDER,
     OPEN_METEO_URL,
     WEATHER_MODEL_AUTO,
+    WEATHER_MODEL_FORECAST_DAYS,
 )
 from .models import SolarForecastData, SolarForecastPoint
 
@@ -48,11 +49,15 @@ class OpenMeteoClient:
             ),
             "tilt": config["declination"],
             "azimuth": _to_open_meteo_azimuth(config["azimuth"]),
-            "forecast_days": 3,
             "timezone": "auto",
         }
 
         weather_model = config.get(CONF_WEATHER_MODEL)
+        params["forecast_days"] = WEATHER_MODEL_FORECAST_DAYS.get(
+            weather_model,
+            3,
+        )
+
         if weather_model and weather_model != WEATHER_MODEL_AUTO:
             params["models"] = weather_model
 
@@ -67,6 +72,21 @@ class OpenMeteoClient:
             timezone = payload["timezone"]
             hourly = payload["hourly"]
             tzinfo = ZoneInfo(timezone)
+            required_fields = (
+                "time",
+                "temperature_2m",
+                "cloud_cover",
+                "global_tilted_irradiance",
+            )
+            missing_fields = [
+                field for field in required_fields if field not in hourly
+            ]
+            if missing_fields:
+                missing = ", ".join(missing_fields)
+                raise OpenMeteoError(
+                    "Open-Meteo did not return the required forecast fields "
+                    f"for model '{weather_model or WEATHER_MODEL_AUTO}': {missing}"
+                )
 
             points = tuple(
                 _build_forecast_point(
@@ -84,6 +104,8 @@ class OpenMeteoClient:
                     strict=True,
                 )
             )
+        except OpenMeteoError:
+            raise
         except (KeyError, TypeError, ValueError) as err:
             raise OpenMeteoError("Open-Meteo returned an unexpected response") from err
 

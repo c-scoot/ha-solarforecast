@@ -10,14 +10,22 @@ DOMAIN = "solarforecast"
 LOGGER = logging.getLogger(__package__)
 
 ATTR_CLOUD_COVER = "cloud_cover"
+ATTR_DAILY_FORECAST = "daily_forecast"
+ATTR_FORECAST_ENERGY = "forecast_energy_today"
 ATTR_FORECAST_TIME = "forecast_time"
+ATTR_FORECAST_TIMEZONE = "forecast_timezone"
 ATTR_GENERATED_AT = "generated_at"
+ATTR_HOURLY_FORECAST = "hourly_forecast"
 ATTR_IRRADIANCE = "irradiance"
+ATTR_ACTUAL_ENERGY = "actual_energy_today"
+ATTR_ACTUAL_ENTITY = "actual_energy_entity"
 ATTR_PROVIDER = "provider"
 ATTR_SITE_AZIMUTH = "site_azimuth"
 ATTR_SITE_TILT = "site_tilt"
 ATTR_TEMPERATURE = "temperature"
+ATTR_VARIANCE_PERCENT = "variance_percent"
 
+CONF_ACTUAL_ENERGY_ENTITY = "actual_energy_entity"
 CONF_INVERTER_POWER = "inverter_power"
 CONF_LOSS_PERCENT = "loss_percent"
 CONF_PANEL_POWER = "panel_power"
@@ -65,3 +73,8 @@ WEATHER_MODEL_OPTIONS: Final[tuple[dict[str, str], ...]] = (
         "label": "NCEP GFS 0.11 deg",
     },
 )
+
+WEATHER_MODEL_FORECAST_DAYS: Final[dict[str, int]] = {
+    "ukmo_uk_deterministic_2km": 2,
+    "ukmo_global_deterministic_10km": 2,
+}
