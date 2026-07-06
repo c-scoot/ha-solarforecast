@@ -1,0 +1,96 @@
+{
+  "title": "Solar Forecast",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add Solar Forecast",
+        "description": "Configure your array geometry and choose an initial weather model for testing.",
+        "data": {
+          "name": "Name",
+          "latitude": "Latitude",
+          "longitude": "Longitude",
+          "declination": "Panel tilt (0 horizontal, 90 vertical)",
+          "azimuth": "Panel azimuth (0 north, 90 east, 180 south, 270 west)",
+          "actual_energy_entity": "Actual solar today sensor",
+          "panel_power": "Total panel watt-peak power",
+          "inverter_power": "Inverter power limit (W)",
+          "loss_percent": "System losses (%)",
+          "temperature_coefficient": "Panel temperature coefficient",
+          "weather_model": "Open-Meteo weather model"
+        },
+        "data_description": {
+          "declination": "Tilt in degrees. Use 0 for flat panels and 90 for vertical panels.",
+          "azimuth": "Compass direction using Home Assistant format: 0 north, 90 east, 180 south, 270 west.",
+          "actual_energy_entity": "Optional. Choose a sensor that already reports today's solar production in Wh, kWh, or MWh so we can compare forecast and actual output.",
+          "panel_power": "Total DC array size in watt-peak, for example 4000 for a 4 kWp system.",
+          "inverter_power": "Optional AC inverter limit in watts. Leave blank if you do not want clipping applied yet.",
+          "loss_percent": "Estimated whole-system losses as a percentage. A starting value around 10 to 15 is often reasonable.",
+          "temperature_coefficient": "Usually a small negative value such as -0.004. Output falls as panel temperature rises.",
+          "weather_model": "Start with Automatic for general use, then compare UK Met Office, ECMWF, DWD, or GFS during testing to see which is most accurate for your site."
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configure Solar Forecast",
+        "description": "Adjust your array settings and switch weather models without re-adding the integration.",
+        "data": {
+          "declination": "Panel tilt (0 horizontal, 90 vertical)",
+          "azimuth": "Panel azimuth (0 north, 90 east, 180 south, 270 west)",
+          "actual_energy_entity": "Actual solar today sensor",
+          "panel_power": "Total panel watt-peak power",
+          "inverter_power": "Inverter power limit (W)",
+          "loss_percent": "System losses (%)",
+          "temperature_coefficient": "Panel temperature coefficient",
+          "weather_model": "Open-Meteo weather model"
+        },
+        "data_description": {
+          "declination": "Tilt in degrees. Use 0 for flat panels and 90 for vertical panels.",
+          "azimuth": "Compass direction using Home Assistant format: 0 north, 90 east, 180 south, 270 west.",
+          "actual_energy_entity": "Optional. Choose a sensor that already reports today's solar production in Wh, kWh, or MWh so we can compare forecast and actual output.",
+          "panel_power": "Total DC array size in watt-peak, for example 4000 for a 4 kWp system.",
+          "inverter_power": "Optional AC inverter limit in watts. Leave blank if you do not want clipping applied yet.",
+          "loss_percent": "Estimated whole-system losses as a percentage. A starting value around 10 to 15 is often reasonable.",
+          "temperature_coefficient": "Usually a small negative value such as -0.004. Output falls as panel temperature rises.",
+          "weather_model": "Automatic uses Open-Meteo best_match. Compare that against UK Met Office and other models to see what fits your site best."
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "estimated_power_now": {
+        "name": "Estimated power now"
+      },
+      "estimated_energy_next_hour": {
+        "name": "Estimated energy next hour"
+      },
+      "estimated_energy_today": {
+        "name": "Estimated energy today"
+      },
+      "estimated_energy_remaining_today": {
+        "name": "Estimated energy remaining today"
+      },
+      "estimated_energy_tomorrow": {
+        "name": "Estimated energy tomorrow"
+      },
+      "actual_energy_today": {
+        "name": "Actual energy today"
+      },
+      "production_variance_today": {
+        "name": "Production variance today"
+      },
+      "production_variance_percentage_today": {
+        "name": "Production variance percentage today"
+      },
+      "forecast_outlook": {
+        "name": "Forecast outlook"
+      },
+      "weather_model": {
+        "name": "Weather model"
+      }
+    }
+  }
+}
